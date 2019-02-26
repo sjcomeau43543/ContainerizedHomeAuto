@@ -1,2 +1,1 @@
-# ContainerizedHomeAuto
-Containerized Home Automation System 
+# Containerized Home Automation System 

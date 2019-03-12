@@ -1,30 +1,31 @@
 #include <SoftwareSerial.h>
 
 SoftwareSerial EEBlue(10, 11); // RX | TX
-int ledPin = 9;
 int EEBlue_data;
 int Serial_data;
+
+int motorPin = 9;
 
 void setup() {
   Serial.begin(9600);
   EEBlue.begin(9600);  //Default Baud for comm, it may be different for your Module. 
   Serial.println("The bluetooth gates are open.\n Connect to HC-05 from any other bluetooth device with 1234 as pairing key!.");
 
-  pinMode(ledPin, OUTPUT);
+  pinMode(motorPin, OUTPUT);
 }
- 
+
 void loop(){
   // Feed any data from bluetooth to Terminal.
   if (EEBlue.available()){
     EEBlue_data = EEBlue.read();
     Serial.write(EEBlue_data);
-
+    
     if (EEBlue_data == '0'){
-      EEBlue.println("Turning the LED off");
-      digitalWrite(ledPin, 0);
+      EEBlue.println("Turning the fan off");
+      digitalWrite(motorPin, LOW);
     } else if (EEBlue_data == '1'){
-      EEBlue.println("Turning the LED on");
-      digitalWrite(ledPin, 1);
+      EEBlue.println("Turning the fan on");
+      digitalWrite(motorPin, HIGH);
     }
   }
  
@@ -33,4 +34,4 @@ void loop(){
     Serial_data = Serial.read();
     EEBlue.write(Serial_data);
   }
-} 
+}

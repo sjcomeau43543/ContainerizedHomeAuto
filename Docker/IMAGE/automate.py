@@ -42,7 +42,7 @@ def bind(MAC, port):
 def write(serial_obj, message, port):
   serial_obj.write(message)
   response = read(serial_obj)
-  while 'SUCCESS' not in response:
+  while 'Turning the LED ' not in response:
     serial_obj.write(message)
     response = read(serial_obj)
   #call(['sudo', 'echo', str(message)], open('/dev/rfcomm'+str(port), 'wb'))

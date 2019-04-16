@@ -4,8 +4,14 @@ MAINTAINER Samantha Comeau
 ADD automate.py /
 RUN pip install pyserial
 
-ARG RW="read"
-RUN if ["$RW"="read"]; then echo 'reading'; else echo 'writing'; fi 
+ENV RW needed
+ENV BIND false
 
-CMD ["python", "automate.py", "-r", "-m", "98:D3:11:FC:1C:45"]
+ENV MAC needed
+ENV MESSAGE needed
+ENV PORT 0
+
+RUN echo $RW
+
+CMD ["sh", "-c", "python automate.py $BIND $RW $MAC $PORT $MESSAGE"]
 

@@ -1,4 +1,4 @@
-import subprocess, time, argparse
+import subprocess, time, sys, os
 
 import serial
 
@@ -31,12 +31,13 @@ def connect(MAC):
 
 # unbinds the rfcomm port
 def unbind(port):
-  call(['sudo', 'rfcomm', 'release', str(port)])
+  if os.path.exists('/dev/rfcomm'+port):
+    call(['sudo', 'rfcomm', 'release', port])
 
 # binds the rfcomm port
 def bind(MAC, port):
-  call(['sudo', 'rfcomm', 'bind', str(port), MAC])
-  call(['sudo', 'chmod', 'a+rwx', '/dev/rfcomm'+str(port)])
+  call(['sudo', 'rfcomm', 'bind', port, MAC])
+  call(['sudo', 'chmod', 'a+rwx', '/dev/rfcomm'+port])
 
 # writes a message to the rfcomm port (bluetooth)
 def write(serial_obj, message, port):
@@ -55,37 +56,39 @@ def read(serial_obj):
   return result
 
 def main():
-  parser = argparse.ArgumentParser(description="Use this program to communicate over bluetooth with a device you've paired and trusted in the past.")
-  
-  # actions
-  parser.add_argument('-r', '--read', action='store_true', help="Read from the bluetooth device")
-  parser.add_argument('-w', '--write', action='store_true', help="Write to the bluetooth device")
-  parser.add_argument('-b', '--bind', action='store_true', help="Bind/Unbind the port")
+  to_bind = sys.argv[1]
+  readwrite = sys.argv[2]
+  mac = sys.argv[3]
+  port = sys.argv[4]
+  message = sys.argv[5]
 
-  # options
-  parser.add_argument('-m', '--mac', required=True, help="The MAC address of the bluetooth device.") 
-  parser.add_argument('-p', '--port', default=0, help="The RFCOMM port to use for communication")
-  parser.add_argument('-t', '--message', help="The message to write to the bluetooth device")
+  print sys.argv
 
-  args = parser.parse_args()
+  if readwrite == "needed":
+    print 'ERROR: You need to provide read or write'
+    exit()
+ 
+  if mac == "needed":
+    print 'ERROR: You need to provide a mac address'
+    exit()
 
-  if args.bind:
-    unbind(str(args.port))
-    bind(args.mac, str(args.port))
+  if to_bind == "true":
+    unbind(port)
+    bind(mac, port)
 
-  if args.read:
-    serial_obj = serial.Serial('/dev/rfcomm'+str(args.port), 9600, timeout=1)
+  if readwrite == "read":
+    serial_obj = serial.Serial('/dev/rfcomm'+port, 9600, timeout=1)
   
     while 1:
       read(serial_obj)
-  elif args.write: 
-    if args.message is None:
+  elif readwrite == "write": 
+    if message == "needed":
       print 'ERROR: If you want to write to the bluetooth device please give a message using -t MESSAGE'
       exit()
 
-    serial_obj = serial.Serial('/dev/rfcomm'+str(args.port), 9600, timeout=1)
+    serial_obj = serial.Serial('/dev/rfcomm'+port, 9600, timeout=1)
 
-    write(serial_obj, str(args.message), str(args.port))
+    write(serial_obj, message, port)
   else: 
     print 'ERROR: You must have either the -r,--read or -w,--write flags to tell if you want to read or write to the bluetooth device.'
     exit()

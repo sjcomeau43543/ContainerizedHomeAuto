@@ -14,6 +14,12 @@ sudo consul agent -data-dir=/tmp/consul -node=agent-two -bind=10.0.0.11 &
 
 sudo nomad agent -config=client.conf -network-interface=eth0
 
+## NOTES
+
+- If there's an error, try deleting everything in the nomad/ directory
+- Server should have: all the .nomad job files, server.conf, nomad/
+- Client should have: automate.py, client.conf, nomad/
+
 
 # How to run automate.py (t = 1 is on)
 sudo python automate.py -w -m 98:D3:A1:FD:49:8D -t 1

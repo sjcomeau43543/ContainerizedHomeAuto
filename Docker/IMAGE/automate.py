@@ -56,7 +56,8 @@ def read(serial_obj):
   return result
 
 def main():
-  to_bind = sys.argv[1]
+#  to_bind = sys.argv[1]
+  to_bind = "false"
   readwrite = sys.argv[2]
   mac = sys.argv[3]
   port = sys.argv[4]

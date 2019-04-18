@@ -1,0 +1,56 @@
+<html>
+<head>
+<style>
+.DoSomething {
+  width: 150px;
+  height: 25px;
+  text-align: center;
+  background-color: lightblue;
+  padding: 10px; 
+  margin: 10px;
+  float: left; 
+
+}
+.DoSomething:hover{
+  cursor: pointer;
+}
+
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+function curl(mac, port, msg) {
+  console.log(mac, port, msg)
+  $.ajax({
+    method: 'POST',
+    uri: 'http://localhost:4646/v1/job/test/dispatch',
+    json: true,
+    data: {
+      "mac": mac,
+      "port": port,
+      "msg": msg
+    }
+  })
+  .done(function(message) {
+    alert("Data Saved: " + message);
+  });
+
+};
+
+
+
+</script>
+</head>
+<body>
+<h2>Your Home Automation System</h2>
+<div class="DoSomething" onclick="curl('98:D3:11:FC:1C:45', '0', '1')"> Turn Lights On </div>
+<div class="DoSomething" onclick="curl('98:D3:11:FC:1C:45', '0', '0')"> Turn Lights Off </div>
+<div class="DoSomething" onclick="curl('98:D3:A1:FD:49:8D', '0', '1')"> Turn Fan On </div>
+<div class="DoSomething" onclick="curl('98:D3:A1:FD:49:8D', '0', '0')"> Turn Fan Off </div>
+
+
+
+
+</body>
+</html>

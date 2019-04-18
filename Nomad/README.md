@@ -95,3 +95,6 @@ payload.json looks like:
     }
 }
 `
+NOTE: for now, all PIs need these payload files on them, This is not ideal,
+since it prevents easily adding a new device. A problem for another time
+perhaps.

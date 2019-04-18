@@ -23,6 +23,10 @@ sudo nomad agent -config=client.conf -network-interface=eth0
 - If there's an error, try deleting everything in the nomad/ directory
 - Server should have: all the .nomad job files, server.conf, nomad/
 - Client should have: automate.py, client.conf, nomad/
+- Check job stderr with
+`nomad alloc logs -stderr e36b0512-a801-2404-a9fb-e63a6efd5efd`
+where e36b0512-a801-2404-a9fb-e63a6efd5efd is the hash assigned to the job (you
+can see it in the client INFO logs)
 
 
 # How to run automate.py (t = 1 is on)

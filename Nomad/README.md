@@ -34,3 +34,16 @@ sudo python automate.py -w -m 98:D3:A1:FD:49:8D -t 1
 
 ## List jobs
 `curl -X GET http://localhost:4646/v1/jobs`
+
+# Run a parameterized job
+First, consul and nomad need to be running on the client and server.
+
+You need to start the job on the server:
+`nomad job run test.nomad` where `test.nomad` is the name of the job file.
+
+Then, send a POST request to the http API of Nomad:
+`curl --request POST -d "{}" http://localhost:4646/v1/job/test/dispatch`
+{} is the parameters to be sent with the job (corresponds to parameterized{}
+stanza in test.nomad).
+
+

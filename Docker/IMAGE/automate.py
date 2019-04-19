@@ -24,9 +24,8 @@ def read(serial_obj):
 
 def main():
   readwrite = sys.argv[1]
-  mac = sys.argv[2]
-  port = sys.argv[3]
-  message = sys.argv[4]
+  port = sys.argv[2]
+  message = sys.argv[3]
 
   print sys.argv
 
@@ -34,8 +33,8 @@ def main():
     print 'ERROR: You need to provide read or write'
     exit()
  
-  if mac == "needed":
-    print 'ERROR: You need to provide a mac address'
+  if port == "needed":
+    print 'ERROR: You need to provide the port number'
     exit()
 
   if readwrite == "read":
@@ -52,7 +51,7 @@ def main():
 
     write(serial_obj, message, port)
   else: 
-    print 'ERROR: You must have either the -r,--read or -w,--write flags to tell if you want to read or write to the bluetooth device.'
+    print 'ERROR: You need to provide `read` or `write` as the first argument to the program.'
     exit()
 
 

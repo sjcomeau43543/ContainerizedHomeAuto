@@ -32,7 +32,7 @@ if [[ $result == *'character special'* ]]; then
 	rfcomm release "2"
 fi
 echo "binding rfcomm2"
-rfcomm bind "2" "98:D3:A1:FD:49:8D"
+rfcomm bind "2" "98:D3:91:FD:4B:59"
 chmod a+rwx "/dev/rfcomm2"
 
 # 3
@@ -43,7 +43,7 @@ if [[ $result == *'character special'* ]]; then
 	rfcomm release "3"
 fi
 echo "binding rfcomm3"
-rfcomm bind "3" "98:D3:91:FD:4B:59"
+rfcomm bind "3" "98:D3:A1:FD:49:8D"
 chmod a+rwx "/dev/rfcomm3"
 
 # 4

@@ -36,7 +36,7 @@ sudo python automate.py -w -m 98:D3:A1:FD:49:8D -t 1
 # CURL
 
 ## Dispatch parameterized job ({} is the parameters)
-`curl -X POST -d "{}" http://localhost:4646/v1/job/test/dispatch`
+`curl -X POST -d @lights_on.json http://localhost:4646/v1/job/test/dispatch`
 
 ## Force garbage collection
 `curl -X PUT http://localhost:4646/v1/system/gc`
